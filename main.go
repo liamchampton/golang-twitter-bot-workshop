@@ -1,6 +1,8 @@
 package main
 
 import (
+	"io/ioutil"
+	"net/http"
 	"os"
 
 	"github.com/dghubble/go-twitter/twitter"
@@ -40,10 +42,18 @@ func main() {
 
 	logr.Infof("client information %v", client)
 
+	dadJoke, err := getJoke()
+	if err != nil {
+		logr.Error(err)
+		os.Exit(1)
+	}
+
+	logr.Info(dadJoke)
+
 	/*
 	**** Tweet ****
 	 */
-	// tweet, resp, err := client.Statuses.Update("Good afternoon, this is another tweet from my bot! :)", nil)
+	// tweet, resp, err := client.Statuses.Update("Todays dad joke is: "+dadJoke+"\nTweeted from my bot ;)", nil)
 	// if err != nil {
 	// 	logr.Error(err)
 	// }
@@ -65,6 +75,31 @@ func main() {
 
 	// logr.Infof("%+v\n", resp)
 	// logr.Infof("%+v\n", search)
+}
+
+/* getJoke:
+Input = N/A
+Return = joke as a string or error
+*/
+func getJoke() (string, error) {
+	req, err := http.NewRequest("GET", "https://icanhazdadjoke.com/", nil)
+	if err != nil {
+		return "", err
+	}
+	req.Header.Set("Accept", "text/plain")
+
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return "", err
+	}
+
+	return string(body), nil
 }
 
 /* getCredentials:
