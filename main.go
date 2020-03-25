@@ -1,12 +1,19 @@
 package main
 
 import (
+	"context"
+	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
+	"os/signal"
+	"syscall"
+	"time"
 
 	"github.com/dghubble/go-twitter/twitter"
 	"github.com/dghubble/oauth1"
+	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 	logr "github.com/sirupsen/logrus"
 )
@@ -30,36 +37,32 @@ func init() {
 func main() {
 	logr.Info("twitter-bot-v0.0.1")
 
-	creds := getCredentials()
+	// Create Server and Route Handlers
+	r := mux.NewRouter()
 
-	//fmt.Printf("%+v\n", creds)
+	r.HandleFunc("/", handler)
+	r.HandleFunc("/health", healthHandler)
+	r.HandleFunc("/readiness", readinessHandler)
+	r.HandleFunc("/showjoke", jokeHandler)
+	r.HandleFunc("/tweetjoke", tweetHandler)
 
-	client, err := getUserClient(&creds)
-	if err != nil {
-		logr.Error("Error getting Twitter Client")
-		logr.Error(err)
+	srv := &http.Server{
+		Handler:      r,
+		Addr:         ":8080",
+		ReadTimeout:  10 * time.Second,
+		WriteTimeout: 10 * time.Second,
 	}
 
-	logr.Infof("client information %v", client)
+	// Start Server
+	go func() {
+		log.Println("Starting Server")
+		if err := srv.ListenAndServe(); err != nil {
+			log.Fatal(err)
+		}
+	}()
 
-	dadJoke, err := getJoke()
-	if err != nil {
-		logr.Error(err)
-		os.Exit(1)
-	}
-
-	logr.Info(dadJoke)
-
-	/*
-	**** Tweet ****
-	 */
-	// tweet, resp, err := client.Statuses.Update("Todays dad joke is: "+dadJoke+"\nTweeted from my bot ;)", nil)
-	// if err != nil {
-	// 	logr.Error(err)
-	// }
-
-	// logr.Infof("%+v\n", resp)
-	// logr.Infof("%+v\n", tweet)
+	// Graceful Shutdown
+	waitForShutdown(srv)
 
 	/*
 	**** Search ****
@@ -75,6 +78,78 @@ func main() {
 
 	// logr.Infof("%+v\n", resp)
 	// logr.Infof("%+v\n", search)
+}
+
+func waitForShutdown(srv *http.Server) {
+	interruptChan := make(chan os.Signal, 1)
+	signal.Notify(interruptChan, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
+
+	// Block until we receive our signal.
+	<-interruptChan
+
+	// Create a deadline to wait for.
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
+	defer cancel()
+	srv.Shutdown(ctx)
+
+	log.Println("Shutting down")
+	os.Exit(0)
+}
+
+func handler(w http.ResponseWriter, r *http.Request) {
+	query := r.URL.Query()
+	name := query.Get("name")
+	if name == "" {
+		name = "Guest"
+	}
+	log.Printf("Received request for %s\n", name)
+	w.Write([]byte(fmt.Sprintf("Hello, %s\n", name)))
+}
+
+func healthHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+}
+
+func readinessHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+}
+
+func tweetHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	dadJoke, err := getJoke()
+	if err != nil {
+		logr.Error(err)
+		os.Exit(1)
+	}
+	w.Write([]byte(fmt.Sprintf("The following joke will be tweeted, %s\n", dadJoke)))
+
+	// creds := getCredentials()
+
+	// client, err := getUserClient(&creds)
+	// if err != nil {
+	// 	logr.Error("Error getting Twitter Client")
+	// 	logr.Error(err)
+	// }
+
+	// tweet, resp, err := client.Statuses.Update("Todays dad joke is: "+dadJoke+"\nTweeted from liams-twitter-bot :)", nil)
+	// if err != nil {
+	// 	logr.Error(err)
+	// }
+
+	// logr.Infof("%+v\n", resp)
+	// logr.Infof("%+v\n", tweet)
+}
+
+func jokeHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	dadJoke, err := getJoke()
+	if err != nil {
+		logr.Error(err)
+		os.Exit(1)
+	}
+
+	w.Write([]byte(fmt.Sprintf(dadJoke)))
+	logr.Info(dadJoke)
 }
 
 /* getJoke:
