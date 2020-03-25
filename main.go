@@ -14,7 +14,6 @@ import (
 	"github.com/dghubble/go-twitter/twitter"
 	"github.com/dghubble/oauth1"
 	"github.com/gorilla/mux"
-	"github.com/joho/godotenv"
 	logr "github.com/sirupsen/logrus"
 )
 
@@ -24,14 +23,6 @@ type Credentials struct {
 	ConsumerSecret    string
 	AccessToken       string
 	AccessTokenSecret string
-}
-
-// init: run before main () to load environment variables from .env into the system
-func init() {
-	logr.Info("Loading environment variables into the system...")
-	if err := godotenv.Load(); err != nil {
-		logr.Error("No .env file found")
-	}
 }
 
 func main() {
@@ -63,21 +54,6 @@ func main() {
 
 	// Graceful Shutdown
 	waitForShutdown(srv)
-
-	/*
-	**** Search ****
-	 */
-
-	// search, resp, err := client.Search.Tweets(&twitter.SearchTweetParams{
-	// 	Query: "IBM",
-	// })
-
-	// if err != nil {
-	// 	logr.Error(err)
-	// }
-
-	// logr.Infof("%+v\n", resp)
-	// logr.Infof("%+v\n", search)
 }
 
 func waitForShutdown(srv *http.Server) {
@@ -138,6 +114,21 @@ func tweetHandler(w http.ResponseWriter, r *http.Request) {
 
 	// logr.Infof("%+v\n", resp)
 	// logr.Infof("%+v\n", tweet)
+
+	/*
+	**** Search ****
+	 */
+
+	// search, resp, err := client.Search.Tweets(&twitter.SearchTweetParams{
+	// 	Query: "IBM",
+	// })
+
+	// if err != nil {
+	// 	logr.Error(err)
+	// }
+
+	// logr.Infof("%+v\n", resp)
+	// logr.Infof("%+v\n", search)
 }
 
 func jokeHandler(w http.ResponseWriter, r *http.Request) {
