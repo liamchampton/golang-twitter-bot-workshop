@@ -64,29 +64,6 @@ func main() {
 	// Graceful Shutdown
 	waitForShutdown(srv)
 
-	creds := getCredentials()
-
-	//fmt.Printf("%+v\n", creds)
-
-	client, err := getUserClient(&creds)
-	if err != nil {
-		logr.Error("Error getting Twitter Client")
-		logr.Error(err)
-	}
-
-	logr.Infof("client information %v", client)
-
-	/*
-	**** Tweet ****
-	 */
-	// tweet, resp, err := client.Statuses.Update("Todays dad joke is: "+dadJoke+"\nTweeted from my bot ;)", nil)
-	// if err != nil {
-	// 	logr.Error(err)
-	// }
-
-	// logr.Infof("%+v\n", resp)
-	// logr.Infof("%+v\n", tweet)
-
 	/*
 	**** Search ****
 	 */
@@ -144,7 +121,23 @@ func tweetHandler(w http.ResponseWriter, r *http.Request) {
 		logr.Error(err)
 		os.Exit(1)
 	}
-	w.Write([]byte(fmt.Sprintf("The following joke has been tweeted, %s\n", dadJoke)))
+	w.Write([]byte(fmt.Sprintf("The following joke will be tweeted, %s\n", dadJoke)))
+
+	// creds := getCredentials()
+
+	// client, err := getUserClient(&creds)
+	// if err != nil {
+	// 	logr.Error("Error getting Twitter Client")
+	// 	logr.Error(err)
+	// }
+
+	// tweet, resp, err := client.Statuses.Update("Todays dad joke is: "+dadJoke+"\nTweeted from liams-twitter-bot :)", nil)
+	// if err != nil {
+	// 	logr.Error(err)
+	// }
+
+	// logr.Infof("%+v\n", resp)
+	// logr.Infof("%+v\n", tweet)
 }
 
 func jokeHandler(w http.ResponseWriter, r *http.Request) {
