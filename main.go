@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -46,9 +45,10 @@ func main() {
 
 	// Start Server
 	go func() {
-		log.Println("Starting Server")
+		logr.Info("Starting Server")
 		if err := srv.ListenAndServe(); err != nil {
-			log.Fatal(err)
+			logr.Error(err)
+			os.Exit(1)
 		}
 	}()
 
@@ -68,7 +68,7 @@ func waitForShutdown(srv *http.Server) {
 	defer cancel()
 	srv.Shutdown(ctx)
 
-	log.Println("Shutting down")
+	logr.Info("Shutting down")
 	os.Exit(0)
 }
 
@@ -78,7 +78,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	if name == "" {
 		name = "Guest"
 	}
-	log.Printf("Received request for %s\n", name)
+	logr.Infof("Received request for %s\n", name)
 	w.Write([]byte(fmt.Sprintf("Hello, %s\n", name)))
 }
 
@@ -136,9 +136,7 @@ func jokeHandler(w http.ResponseWriter, r *http.Request) {
 	dadJoke, err := getJoke()
 	if err != nil {
 		logr.Error(err)
-		os.Exit(1)
 	}
-
 	w.Write([]byte(fmt.Sprintf(dadJoke)))
 	logr.Info(dadJoke)
 }
