@@ -180,7 +180,6 @@ func getCredentials() Credentials {
 		ConsumerSecret:    os.Getenv("CONSUMER_SECRET"),
 	}
 
-	//return creds
 	return creds
 }
 
