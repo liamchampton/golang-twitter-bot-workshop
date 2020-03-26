@@ -10,19 +10,11 @@ import (
 	"syscall"
 	"time"
 
+	twitter_auth "github.com/IBMDeveloperUK/twitter-bot/pkg/twitter_auth"
 	"github.com/dghubble/go-twitter/twitter"
-	"github.com/dghubble/oauth1"
 	"github.com/gorilla/mux"
 	logr "github.com/sirupsen/logrus"
 )
-
-// Credentials struct contains API credentials pulled from env vars:
-type Credentials struct {
-	ConsumerKey       string
-	ConsumerSecret    string
-	AccessToken       string
-	AccessTokenSecret string
-}
 
 func main() {
 	logr.Info("twitter-bot-v0.0.1")
@@ -99,13 +91,13 @@ func tweetHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Write([]byte(fmt.Sprintf("The following joke will be tweeted, %s\n", dadJoke)))
 
-	// creds := getCredentials()
+	creds := twitter_auth.GetCredentials()
 
-	// client, err := getUserClient(&creds)
-	// if err != nil {
-	// 	logr.Error("Error getting Twitter Client")
-	// 	logr.Error(err)
-	// }
+	client, err := twitter_auth.GetUserClient(&creds)
+	if err != nil {
+		logr.Error("Error getting Twitter Client")
+		logr.Error(err)
+	}
 
 	// tweet, resp, err := client.Statuses.Update("Todays dad joke is: "+dadJoke+"\nTweeted from liams-twitter-bot :)", nil)
 	// if err != nil {
@@ -119,16 +111,16 @@ func tweetHandler(w http.ResponseWriter, r *http.Request) {
 	**** Search ****
 	 */
 
-	// search, resp, err := client.Search.Tweets(&twitter.SearchTweetParams{
-	// 	Query: "IBM",
-	// })
+	search, resp, err := client.Search.Tweets(&twitter.SearchTweetParams{
+		Query: "IBM",
+	})
 
-	// if err != nil {
-	// 	logr.Error(err)
-	// }
+	if err != nil {
+		logr.Error(err)
+	}
 
-	// logr.Infof("%+v\n", resp)
-	// logr.Infof("%+v\n", search)
+	logr.Infof("%+v\n", resp)
+	logr.Infof("%+v\n", search)
 }
 
 func jokeHandler(w http.ResponseWriter, r *http.Request) {
@@ -166,46 +158,4 @@ func getJoke() (string, error) {
 	}
 
 	return string(body), nil
-}
-
-/* getCredentials:
-Input = N/A
-Return = Populated Credentials struct
-*/
-func getCredentials() Credentials {
-	creds := Credentials{
-		AccessToken:       os.Getenv("ACCESS_TOKEN"),
-		AccessTokenSecret: os.Getenv("ACCESS_TOKEN_SECRET"),
-		ConsumerKey:       os.Getenv("CONSUMER_KEY"),
-		ConsumerSecret:    os.Getenv("CONSUMER_SECRET"),
-	}
-
-	return creds
-}
-
-/* getUserClient:
-Input = credentials
-Return = authenticated twitter client, error
-*/
-func getUserClient(creds *Credentials) (*twitter.Client, error) {
-
-	config := oauth1.NewConfig(creds.ConsumerKey, creds.ConsumerSecret)
-	token := oauth1.NewToken(creds.AccessToken, creds.AccessTokenSecret)
-
-	httpClient := config.Client(oauth1.NoContext, token)
-	client := twitter.NewClient(httpClient)
-
-	verifyParams := &twitter.AccountVerifyParams{
-		SkipStatus:   twitter.Bool(true),
-		IncludeEmail: twitter.Bool(true),
-	}
-
-	user, _, err := client.Accounts.VerifyCredentials(verifyParams)
-	if err != nil {
-		logr.Error(err)
-		return nil, err
-	}
-
-	logr.Infof("User Account Info:\n%+v\n", user)
-	return client, nil
 }
