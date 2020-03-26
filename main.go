@@ -133,6 +133,7 @@ func tweetHandler(w http.ResponseWriter, r *http.Request) {
 
 func jokeHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
+	logr.Infof("Received request to show a joke")
 	dadJoke, err := getJoke()
 	if err != nil {
 		logr.Error(err)
@@ -146,6 +147,7 @@ Input = N/A
 Return = joke as a string or error
 */
 func getJoke() (string, error) {
+	logr.Infof("Received request for a joke")
 	req, err := http.NewRequest("GET", "https://icanhazdadjoke.com/", nil)
 	if err != nil {
 		return "", err
