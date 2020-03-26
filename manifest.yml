@@ -3,3 +3,5 @@ applications:
 - name: Twitter-Joke-Bot
   random-route: true
   memory: 128M
+  env:
+    GO_INSTALL_PACKAGE_SPEC: github.com/IBMDeveloperUK/twitter-bot/cmd
