@@ -53,20 +53,23 @@ Once installed, you can access IBM Cloud from your command-line with the prefix 
 Once you are all set up you can move straight on to [Lab 1](../Lab1/README.md)
 
 
-## Lab 1 - Creating a basic Golang Application
+## Lab 1 - Creating a basic Golang Application :books:
 
 ### Step 1
 
 Clone [this]() repository into `$HOME/<user>/go/github.com` and then open the directory into your preferred editor. (I use Visual Studio Code with [this](https://code.visualstudio.com/docs/languages/go) recommended Go extension installed from the marketplace)
 
-## Lab 2 - Lets get RESTful
+## Lab 2 - Lets get RESTful :dancer:
 
 In this lab we are going to create an API without the need for authentication and add it to a route that you created in Lab 1. The API in this lab is a dad joke API but feel free to explore and chose another if you'd like!
 
-## Lab 3 - Up in the cloud(s)
+## Lab 3 - Up in the :cloud:
 
 Here you will have 2 options when deploying your application into a cloud environment. Chose your preferred method, or do both?
 
 ### Option 1 - IBM Cloud Foundary
 
 ### Option 2 - Kubernetes in IBM cloud
+
+## Lab 4 - Tweet tweet! :bird:
+
