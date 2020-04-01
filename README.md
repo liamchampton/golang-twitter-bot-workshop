@@ -57,7 +57,15 @@ Once you are all set up you can move straight on to [Lab 1](../Lab1/README.md)
 
 ### Step 1
 
-Clone [this]() repository into `$HOME/<user>/go/github.com` and then open the directory into your preferred editor. (I use Visual Studio Code with [this](https://code.visualstudio.com/docs/languages/go) recommended Go extension installed from the marketplace)
+Clone [this]() repository into `$HOME/<user>/go/github.com` and then open the `<PROJECT NAME HERE>` directory into your preferred editor. (I use Visual Studio Code with [this](https://code.visualstudio.com/docs/languages/go) recommended Go extension installed from the marketplace)
+
+### Step 2
+
+In a new terminal window make sure you can run the `main.go` file (located in `<PROJECTNAME>/cmd`). To do this use the command `go run cmd/main.go`. This will compile the code and run the program without building a binary (more on this later). The output should be `Hello Fellow Gopher!`.
+
+Now the code is running successfully, you can see everything has been set up correctly and you are able to run Go code on your machine.
+
+In the next lab we will turn this up a notch and turn our simple `hello world` program into a web server.
 
 ## Lab 2 - Lets get RESTful :dancer:
 
@@ -71,5 +79,6 @@ Here you will have 2 options when deploying your application into a cloud enviro
 
 ### Option 2 - Kubernetes in IBM cloud
 
-## Lab 4 - Tweet tweet! :bird:
+## Lab 4 - Tweet Tweet! :bird:
 
+In this lab, we will look at transforming application into a twitter bot. To complete this, you must have a twitter developer account set up with the API keys to hand. 
