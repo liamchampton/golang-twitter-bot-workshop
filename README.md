@@ -106,6 +106,67 @@ Head back to your terminal window and run command to compile your code `go run c
 
 Open up a browser and type `localhost:8080` into the top URL bar and you should see the output from the `handler()` function on your screen.
 
+### Step 4
+
+The server is up and running but this is very basic. Type `control+c` in your terminal to terminate the server connection. Next, you will now add in a route to call an API without any authentication. In this workshop, it just calls a random joke generator but you can change this API to be whatever you'd like.
+
+Firstly, you will need to write the code that invokes the API to get the data. The code snippet below is a new function.
+
+```golang
+func getJoke() (string, error) {
+    logr.Infof("Getting joke from API..")
+    req, err := http.NewRequest("GET", "https://icanhazdadjoke.com/", nil)
+    if err != nil {
+        return "", err
+    }
+    req.Header.Set("Accept", "text/plain")
+
+    resp, err := http.DefaultClient.Do(req)
+    if err != nil {
+        return "", err
+    }
+    defer resp.Body.Close()
+
+    body, err := ioutil.ReadAll(resp.Body)
+    if err != nil {
+        return "", err
+    }
+
+    return string(body), nil
+}
+```
+
+This will return a string of the body and nil, since there is no error at this point. You can change the output type by changing the header in the request but we want to see the joke in plain text on the page.
+
+Now the API call is in place, the next thing you need to do is add the handler, just like you did in Step 1.
+
+To do this, use the code snippet below and then call it in the the `main()` function, just like you did with the previous handler.
+
+```golang
+func jokeHandler(w http.ResponseWriter, r *http.Request) {
+    w.WriteHeader(http.StatusOK)
+    logr.Infof("Received request to show a joke")
+    dadJoke, err := getJoke()
+    if err != nil {
+        logr.Error(err)
+    }
+    w.Write([]byte(fmt.Sprintf(dadJoke)))
+    logr.Info(dadJoke)
+}
+
+func main() {
+    ...
+    r := mux.NewRouter()
+    r.HandleFunc("/", handler)
+    r.HandleFunc("/showjoke", jokeHandler)
+    ...
+}
+```
+
+If you run the code and navigate to `localhost:8080` in your browser you should now be presented with a randomly generated joke!
+
+Now the jokes are flowing, lets get it up in the cloud. Continue to [Lab 3](../Lab3/README.md) to see how this is done 
+
 ## Lab 3 - Up in the :cloud:
 
 Here you will have 2 options when deploying your application into a cloud environment. Chose your preferred method, or do both?
