@@ -61,7 +61,7 @@ Clone [this]() repository into `$HOME/<user>/go/github.com` and then open the `<
 
 ### Step 2
 
-In a new terminal window make sure you can run the `main.go` file (located in `<PROJECTNAME>/cmd`). To do this use the command `go run cmd/main.go`. This will compile the code and run the program without building a binary (more on this later). The output should be `Hello Fellow Gopher!`.
+First you need to make sure you can run the `main.go` file (located in `<PROJECTNAME>/cmd`). To do this, navigate to the directory in a new terminal window and use the command `go run cmd/main.go`. This will compile the code and run the program without building a binary (more on this later). The output should be `Hello Fellow Gopher!`.
 
 Now the code is running successfully, you can see everything has been set up correctly and you are able to run Go code on your machine.
 
@@ -69,7 +69,42 @@ In the next lab we will turn this up a notch and turn our simple `hello world` p
 
 ## Lab 2 - Lets get RESTful :dancer:
 
-In this lab we are going to create an API without the need for authentication and add it to a route that you created in Lab 1. The API in this lab is a dad joke API but feel free to explore and chose another if you'd like!
+In this lab you are going to create a web app with some routes. To do this you will use the 3rd party import `gorilla/mux`. Some bedtime reading about this can be found [here](https://github.com/gorilla/mux). We will then follow this up to output a random joke by calling an open API without the need for authentication. The API in this lab is a dad joke API but feel free to explore and chose another if you'd like!
+
+### Step 1
+
+First you will need to add a handler function to accept a router request to display a page. To do this, use the code below and add it under the `main()` function. 
+**Note**: You will also need to add `logr "github.com/sirupsen/logrus"` to your imports as this is the logger being used in this lab.
+
+```golang
+func handler(w http.ResponseWriter, r *http.Request) {
+    name := "<your name here>"
+    logr.Info("Received request for the home page")
+    w.Write([]byte(fmt.Sprintf("Hello, %s\n", name)))
+}
+```
+
+### Step 2
+
+Now you have got a route handler, you need to create the web server to invoke it. To do this, use the code snippet below and insert it into your `main()` function. Instead of using the standard go `net/http` library's we will use a more powerful 3rd party import, `gorilla mux`.
+
+```golang
+// Create Server and Route Handlers
+    r := mux.NewRouter()
+    r.HandleFunc("/", handler)
+
+    http.Handle("/", r)
+    logr.Info("Starting up on 8080")
+    logr.Error(http.ListenAndServe(":8080", nil))
+```
+This code will start up a server on port 8080.
+
+### Step 3
+
+Head back to your terminal window and run command to compile your code `go run cmd/main.go`.
+> **Note** You may be prompted by your system to allow a network connection
+
+Open up a browser and type `localhost:8080` into the top URL bar and you should see the output from the `handler()` function on your screen.
 
 ## Lab 3 - Up in the :cloud:
 
