@@ -181,6 +181,14 @@ Before you can complete any of the next steps, you must either [sign up](https:/
 
 - Install the [Cloud Foundary cli tool](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html) which will allow you to push your app to Cloud Foundary
 
+### Step 2
+
+![IBM Cloud Login](./images/IBMCloudLogin.png)
+![IBM Cloud Left Panel](./images/IBMCloudLeftPan.png)
+![Create Public Application](./images/CreatePublicApp.png)
+![CF App Details](./images/CfAppDetails.png)
+![Running App URL](./images/RunningAppURL.png)
+
 
 ### Option 2 - Kubernetes in IBM cloud
 
