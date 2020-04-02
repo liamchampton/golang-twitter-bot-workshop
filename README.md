@@ -171,10 +171,19 @@ Now the jokes are flowing, lets get it up in the cloud. Continue to [Lab 3](../L
 
 Here you will have 2 options when deploying your application into a cloud environment. Chose your preferred method, or do both?
 
+Before you can complete any of the next steps, you must either [sign up](https://cloud.ibm.com/registration) for an IBM Cloud account or log into your existing one
+
 ### Option 1 - IBM Cloud Foundary
+
+### Step 1
+
+- Install the [ibmcloud cli tool](https://cloud.ibm.com/docs/cli?topic=cloud-cli-install-ibmcloud-cli) to allow you to connect to IBM Cloud
+
+- Install the [Cloud Foundary cli tool](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html) which will allow you to push your app to Cloud Foundary
+
 
 ### Option 2 - Kubernetes in IBM cloud
 
 ## Lab 4 - Tweet Tweet! :bird:
 
-In this lab, we will look at transforming application into a twitter bot. To complete this, you must have a twitter developer account set up with the API keys to hand. 
+In this lab, we will look at transforming application into a twitter bot. To complete this, you must have a twitter developer account set up with the API keys to hand.
