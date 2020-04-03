@@ -171,24 +171,51 @@ Now the jokes are flowing, lets get it up in the cloud. Continue to [Lab 3](../L
 
 Here you will have 2 options when deploying your application into a cloud environment. Chose your preferred method, or do both?
 
-Before you can complete any of the next steps, you must either [sign up](https://cloud.ibm.com/registration) for an IBM Cloud account or log into your existing one
+Before you can complete any of the next steps, you must either [sign up](https://cloud.ibm.com/registration) for an IBM Cloud account or [login](https://cloud.ibm.com/login) to your existing one
 
 ### Option 1 - IBM Cloud Foundary
 
 ### Step 1
 
-- Install the [ibmcloud cli tool](https://cloud.ibm.com/docs/cli?topic=cloud-cli-install-ibmcloud-cli) to allow you to connect to IBM Cloud
+- Install the [ibmcloud cli tool](https://cloud.ibm.com/docs/cli?topic=cloud-cli-install-ibmcloud-cli). With this you can access IBM Cloud from your command-line with the prefix ibmcloud
 
-- Install the [Cloud Foundary cli tool](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html) which will allow you to push your app to Cloud Foundary
+- Install the [Cloud Foundary cli tool](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html). This will allow you to push your app to Cloud Foundary
+
+You now need to prepare your application for Cloud Foundary. To do this, in the top level directory of your project create a file called `manifest.yml`. This will be the building blocks for your application when pushing it up to the cloud. Inside this add the following code
+
+```yaml
+---
+applications:
+- name: <name of your app as it appears in IBM Cloud>
+  random-route: true
+  memory: 128M
+  env:
+    GO_INSTALL_PACKAGE_SPEC: <name of the path to your main.go file on your system, eg. github.com/twitter-bot/cmd >
+```
 
 ### Step 2
 
+The following screenshots illustrate how to set up a Cloud Foundary application in IBM Cloud. Follow these simple steps to get a resource up and running.
+
 ![IBM Cloud Login](./images/IBMCloudLogin.png)
+
 ![IBM Cloud Left Panel](./images/IBMCloudLeftPan.png)
+
 ![Create Public Application](./images/CreatePublicApp.png)
+
 ![CF App Details](./images/CfAppDetails.png)
+
 ![Running App URL](./images/RunningAppURL.png)
 
+### Step 3
+
+In a terminal window, navigate to the project directory (`$HOME/go/src/github.com/<projectname>`) and login to your IBM Cloud account. To do this:
+
+1. Log in to the IBM Cloud CLI: `ibmcloud login`
+
+2. Enter your IBM Cloud credentials when prompted
+
+> **Note:** If you have a federated ID, use ibmcloud login --sso to log in to the IBM Cloud CLI. Enter your user name, and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the --sso and succeeds with the --sso option.
 
 ### Option 2 - Kubernetes in IBM cloud
 
