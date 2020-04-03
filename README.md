@@ -197,7 +197,7 @@ applications:
 
 The following screenshots illustrate how to set up a Cloud Foundary application in IBM Cloud. Follow these simple steps to get a resource up and running.
 
-![IBM Cloud Login](./images/IBMCloundLogin.png)
+![IBM Cloud Login](./images/IBMCloudLogin.png)
 
 ![IBM Cloud Left Panel](./images/IBMCloudLeftPan.png)
 
