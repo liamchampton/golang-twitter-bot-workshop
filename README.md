@@ -205,15 +205,21 @@ The following screenshots illustrate how to set up a Cloud Foundary application 
 
 ![CF App Details](./images/CfAppDetails.png)
 
-![Running App URL](./images/RunningAppURL.png)
-
 ### Step 3
 
 In a terminal window, navigate to the project directory (`$HOME/go/src/github.com/<projectname>`) and login to your IBM Cloud account. To do this:
 
 1. Log in to the IBM Cloud CLI: `ibmcloud login`
-
 2. Enter your IBM Cloud credentials when prompted
+3. Target Cloud Foundary with IBM Cloud by using: `ibmcloud target --cf`
+4. Push your app into Cloud Foundary: `ibmcloud cf push`
+
+Your application should be created and you should see it running in the UI :clap:
+
+To see your application running and have it output a joke, go to the main resource page and click on the `Visit App URL`. At the end of the URL append `/showjoke`
+
+![Running App URL](./images/RunningAppURL.png)
+
 
 > **Note:** If you have a federated ID, use ibmcloud login --sso to log in to the IBM Cloud CLI. Enter your user name, and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the --sso and succeeds with the --sso option.
 
