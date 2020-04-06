@@ -253,7 +253,7 @@ Create a public application
 
 **IMPORTANT PART**: First, Make sure the Go runtime is selected and then fill in the detail boxes shown below, indicated with a red arrow. The rest will auto-fill as you type or already be populated with text. The hostname and domain can be left with the defaults already populated.
 
-![CF App Details 1](./images/CfAppDetails1.png)
+![CF App Details 1](./images/CFAppDetails1.png)
 
 > **Note** Do not be alarmed at the pricing plan, you will not be exceeding the free allowance with this workshop. "First 186 GB-Hour's free per month for one or more applications built using any of the Community runtimes."
 
