@@ -8,12 +8,12 @@ This workshop will show you how to build a simple Golang application and then de
 
 Use [this open source repository](https://github.com/canha/golang-tools-install-script) to install Golang onto your machine.
 
-Ubuntu 16.04+
+**Ubuntu 16.04+**
 ```bash
 wget -q -O - https://raw.githubusercontent.com/canha/golang-tools-install-script/master/goinstall.sh \
 | bash -s -- --version 1.14.1
 ```
-macOS
+**MacOS**
 ```bash
 curl https://raw.githubusercontent.com/canha/golang-tools-install-script/master/goinstall.sh \
 | bash -s -- --version 1.14.1
@@ -37,10 +37,10 @@ mkdir $HOME/go/src/github.com
 .
 ├── $HOME
 │   ├── /go
-|        ├── /bin
-|        ├── /pkg
+│        ├── /bin
+│        ├── /pkg
 │        └── /src
-|             └── /github.com
+│             └── /github.com
 ```
 
 ## Prerequisites
@@ -138,19 +138,28 @@ Firstly, you will need to write the code that invokes the API to get the data. T
 ```golang
 func getJoke() (string, error) {
     logr.Infof("Getting joke from API..")
+
     req, err := http.NewRequest("GET", "https://icanhazdadjoke.com/", nil)
+
+    // Check the request doesnt return an error
     if err != nil {
         return "", err
     }
     req.Header.Set("Accept", "text/plain")
 
     resp, err := http.DefaultClient.Do(req)
+
+    // Check the request doesnt return an error
     if err != nil {
         return "", err
     }
+
+    // Closes resp.Body at the end of the function (always do this to prevent memory leaks, even if it isn't used)
     defer resp.Body.Close()
 
-    body, err := ioutil.ReadAll(resp.Body)
+    body, err := ioutil.ReadAll(resp.Body) // Read resp.Body until EOF
+
+    // Check the ReadAll doesn't return an error
     if err != nil {
         return "", err
     }
@@ -167,18 +176,23 @@ To do this, add the new function shown below and then invoke it in the `main()` 
 
 ```golang
 func jokeHandler(w http.ResponseWriter, r *http.Request) {
-    w.WriteHeader(http.StatusOK)
+    w.WriteHeader(http.StatusOK) // Write the status code 200
     logr.Infof("Received request to show a joke")
+
     dadJoke, err := getJoke()
+
+    // Check the request doesnt return an error
     if err != nil {
         logr.Error(err)
     }
-    w.Write([]byte(fmt.Sprintf(dadJoke)))
+
+    w.Write([]byte(fmt.Sprintf(dadJoke))) // Write the joke to a byte array
     logr.Info(dadJoke)
 }
 ```
 
 ```golang
+// Add this line below the existing "/" route 
 r.HandleFunc("/showjoke", jokeHandler)
 ```
 
