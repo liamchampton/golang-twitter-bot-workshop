@@ -3,6 +3,7 @@
 This workshop will show you how to build a simple Golang application and then deploy it to your preferred cloud environment
 
 ## Golang Installation
+
 ### Automated Installation (Ubuntu 16.04+ & macOS only)
 
 Use [this open source repository](https://github.com/canha/golang-tools-install-script) to install Golang onto your machine.
@@ -24,8 +25,10 @@ mkdir $HOME/go/src/github.com
 ```
 
 ### Manual Installation
+
 1. To manually install the Go tools, use the Go documentation and follow the instructions [here](https://golang.org/doc/install) 
 2. Ensure your system follows the folder tree below
+
 ```bash
 .
 ├── $HOME
@@ -35,12 +38,16 @@ mkdir $HOME/go/src/github.com
 │        └── /src
 |             └── /github.com
 ```
+
 ## Prerequisites
+
 1. Twitter API Keys - Obtained by having a developer account on Twitter. This can be registered [here](https://developer.twitter.com/en/docs/basics/developer-portal/overview). This is only needed for the final lab and takes ~15minutes to set up
 2. AN IDE installed (GoLand/Visual Studio Code etc)
 
 ## Lab 0 - Install the Prerequisites
+
 ### IBM cloud command line interface
+
 (If you already have these setup and installed, go straight to [Lab 1](../Lab1/README.md))
 
 1. Install the [IBM Cloud command-line interface from this link](https://cloud.ibm.com/docs/cli?topic=cloud-cli-install-ibmcloud-cli).     
@@ -51,7 +58,6 @@ Once installed, you can access IBM Cloud from your command-line with the prefix 
    **Note:** If you have a federated ID, use `ibmcloud login --sso` to log in to the IBM Cloud CLI. Enter your user name, and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
 
 Once you are all set up you can move straight on to [Lab 1](../Lab1/README.md)
-
 
 ## Lab 1 - Creating a basic Golang Application :books:
 
@@ -69,7 +75,7 @@ In the next lab we will turn this up a notch and turn our simple `hello world` p
 
 ## Lab 2 - Lets get RESTful :dancer:
 
-In this lab you are going to create a web app with some routes. To do this you will use the 3rd party import `gorilla/mux`. Some bedtime reading about this can be found [here](https://github.com/gorilla/mux). We will then follow this up to output a random joke by calling an open API without the need for authentication. The API in this lab is a dad joke API but feel free to explore and chose another if you'd like!
+In this lab you are going to create a web app with some routes. To do this you will use the 3rd party import `gorilla/mux`. Some bedtime reading about this can be found [here](https://github.com/gorilla/mux){:target="_blank"}. We will then follow this up to output a random joke by calling an open API without the need for authentication. The API in this lab is a dad joke API but feel free to explore and chose another if you'd like!
 
 ### Step 1
 
