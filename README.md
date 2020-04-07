@@ -8,22 +8,28 @@ This workshop will show you how to build a simple Golang application and then de
 
 Use [this open source repository](https://github.com/canha/golang-tools-install-script) to install Golang onto your machine.
 
-**Ubuntu 16.04+**
+Ubuntu 16.04+
+
 ```bash
 wget -q -O - https://raw.githubusercontent.com/canha/golang-tools-install-script/master/goinstall.sh \
 | bash -s -- --version 1.14.1
 ```
-**macOS**
-```bash
-curl https://raw.githubusercontent.com/canha/golang-tools-install-script/master/goinstall.sh \
-| bash -s -- --version 1.14.1
-```
-or
+
+macOS
+
 ```bash
 brew install go
 ```
 
+or
+
+```bash
+curl https://raw.githubusercontent.com/canha/golang-tools-install-script/master/goinstall.sh \
+| bash -s -- --version 1.14.1
+```
+
 Once the installation has finished, create a folder called `github.com` inside `$HOME/go/src`. Copy and paste the following command to do this for you.
+
 ```bash
 mkdir $HOME/go/src/github.com
 ```
@@ -61,12 +67,12 @@ Once installed, you can access IBM Cloud from your command-line with the prefix 
 
    **Note:** If you have a federated ID, use `ibmcloud login --sso` to log in to the IBM Cloud CLI. Enter your user name, and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
 
-Once you are all set up you can move straight on to [Lab 1](../Lab1/README.md) // FIX THIS LINK
+Once you are all set up you can move straight on to [Lab 1](../Lab1/README.md) // TODO: FIX THIS LINK
 
 ## Lab 1 - Creating a basic Golang Application :books:
 
 ### Step 1
-// FIX THIS LINK
+// TODO: FIX THIS LINK
 
 Clone [this]() repository into `$HOME/<user>/go/github.com` and then open the `<PROJECT NAME HERE>` directory into your preferred editor. (I use Visual Studio Code with the recommended [Go extension](https://code.visualstudio.com/docs/languages/go) installed from the marketplace)
 
@@ -212,20 +218,24 @@ Before you can complete any of the next steps, you must either [sign up](https:/
 
 - Install the [ibmcloud cli tool](https://cloud.ibm.com/docs/cli?topic=cloud-cli-install-ibmcloud-cli#shell_install) with the following commands. With this you can access IBM Cloud from your command-line with the prefix ibmcloud
 
-**Mac**
+Mac
+
 ```bash
 curl -fsSL https://clis.cloud.ibm.com/install/osx | sh
 ```
 
-**Linux**
+Linux
+
 ```bash
 curl -fsSL https://clis.cloud.ibm.com/install/linux | sh
 ```
 
-**Windows Powershell**
+Windows Powershell
+
 ```bash
 iex(New-Object Net.WebClient).DownloadString('https://clis.cloud.ibm.com/install/powershell')
 ```
+
 > **Note**: If you encounter errors like The underlying connection was closed: An unexpected error occurred on a send, make sure you have .Net Framework 4.5 or later installed. Also try to enable TLS 1.2 protocol by running the following command:
 
 ```bash
