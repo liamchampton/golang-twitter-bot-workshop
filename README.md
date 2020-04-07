@@ -293,7 +293,7 @@ applications:
 
 ### Step 4
 
-In a terminal window, from within your project directory (`$HOME/go/src/github.com/<projectname>`), login to your IBM Cloud account. To do this:
+In a terminal window, from within your project directory (`$HOME/go/src/github.com/<projectname>`), you are going to login to your IBM Cloud account, target Cloud Foundary and then push your application up. To do this, follow the simple steps that follow:
 
 1. Make sure you are logged into to the IBM Cloud via the CLI: `ibmcloud login`
 
@@ -304,7 +304,7 @@ In a terminal window, from within your project directory (`$HOME/go/src/github.c
 3. Target Cloud Foundary with IBM Cloud by using: `ibmcloud target --cf`
 4. Push your app into Cloud Foundary: `ibmcloud cf push`
 
-Your application should be created and you should see it running in the UI :clap:
+If the push is successful, your application will be created and you should see it running in the UI after a minute or two :clap:
 
 To see your application running and have it output a joke, go to the main resource page and click on the `Visit App URL`. At the end of the URL append `/showjoke`
 
