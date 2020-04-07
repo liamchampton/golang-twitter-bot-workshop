@@ -4,7 +4,7 @@ This workshop will show you how to build a simple Golang application and then de
 
 ## Golang Installation
 
-### Automated Installation (Ubuntu 16.04+ & macOS only)
+### Automated Installation (**Ubuntu 16.04+ & macOS only**)
 
 Use [this open source repository](https://github.com/canha/golang-tools-install-script) to install Golang onto your machine.
 
@@ -13,7 +13,7 @@ Use [this open source repository](https://github.com/canha/golang-tools-install-
 wget -q -O - https://raw.githubusercontent.com/canha/golang-tools-install-script/master/goinstall.sh \
 | bash -s -- --version 1.14.1
 ```
-**MacOS**
+**macOS**
 ```bash
 curl https://raw.githubusercontent.com/canha/golang-tools-install-script/master/goinstall.sh \
 | bash -s -- --version 1.14.1
@@ -54,7 +54,7 @@ mkdir $HOME/go/src/github.com
 
 (If you already have these setup and installed, go straight to [Lab 1](../Lab1/README.md)) // FIX THIS LINK
 
-1. Install the [IBM Cloud command-line interface from this link](https://cloud.ibm.com/docs/cli?topic=cloud-cli-install-ibmcloud-cli).     
+1. Install the [IBM Cloud command-line interface from this link](https://cloud.ibm.com/docs/cli?topic=cloud-cli-install-ibmcloud-cli).
 Once installed, you can access IBM Cloud from your command-line with the prefix `ibmcloud`.
 2. Log in to the IBM Cloud CLI: `ibmcloud login`.
 3. Enter your IBM Cloud credentials when prompted.
