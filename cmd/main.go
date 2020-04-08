@@ -25,8 +25,8 @@ func main() {
 	r.HandleFunc("/", handler)
 	r.HandleFunc("/health", healthHandler)
 	r.HandleFunc("/readiness", readinessHandler)
-	r.HandleFunc("/showjoke", jokeHandler)
-	r.HandleFunc("/tweetjoke", tweetHandler)
+	r.HandleFunc("/showjoke", JokeHandler)
+	r.HandleFunc("/tweetjoke", TweetHandler)
 
 	srv := &http.Server{
 		Handler:      r,
@@ -82,7 +82,7 @@ func readinessHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-func tweetHandler(w http.ResponseWriter, r *http.Request) {
+func TweetHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	dadJoke, err := getJoke()
 	if err != nil {
@@ -123,7 +123,7 @@ func tweetHandler(w http.ResponseWriter, r *http.Request) {
 	logr.Infof("%+v\n", search)
 }
 
-func jokeHandler(w http.ResponseWriter, r *http.Request) {
+func JokeHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	logr.Infof("Received request to show a joke")
 	dadJoke, err := getJoke()
