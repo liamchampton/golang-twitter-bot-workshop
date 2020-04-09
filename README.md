@@ -356,14 +356,22 @@ docker push <docker-hub-username>/twitter-bot:v1
 Provision a cluster:
 
 ```bash
-ibmcloud ks cluster create --name <name-of-cluster>
+ibmcloud ks cluster create classic --name <name-of-cluster>
 ```
 
 Once the cluster is provisioned, the kubernetes client CLI kubectl needs to be configured to talk to the provisioned cluster.
 
-Run `ibmcloud ks cluster config <name-of-cluster>`, and set the `KUBECONFIG` environment variable based on the output of the command. This will make your `kubectl` client point to your new Kubernetes cluster.
+Run `ibmcloud ks cluster config --cluster <name-of-cluster>`,
+
+
+// NEEDED??
+
+******************
+and set the `KUBECONFIG` environment variable based on the output of the command. This will make your `kubectl` client point to your new Kubernetes cluster.
 
 (If you're running in a Windows PowerShell environment, the *SET* and/or *EXPORT* equivalent is `$env:KUBECONFIG="<value of KUBECONFIG filename>"`; after setting, confirm the value is in the shell environment with `ls env:KUBECONFIG`)
+
+******************
 
 Once your client is configured, you are ready to deploy your application.
 
@@ -391,11 +399,11 @@ To find the port used on the worker node, examine your service:
 kubectl get service twitter-bot
 ```
 
-`twitter-bot` is now running on your cluster, and exposed to the internet. We need to find out where it is accessible. The worker nodes running in the container service get external IP addresses. Run `ibmcloud ks workers <name-of-cluster>`, and note the public IP listed on the `<public-IP>` line.
+`twitter-bot` is now running on your cluster, and exposed to the internet. We need to find out where it is accessible. The worker nodes running in the container service get external IP addresses. Run `ibmcloud ks workers --cluster twitter-bot-cluster`, and note the public IP listed on the `<public-IP>` line.
 
 ### Step 4
 
-Now that you have both the address and the port, you can now access the application in the web browser at <public-IP>:<nodeport>.
+Now that you have both the address and the port, you can now access the application in the web browser at `<public-IP>:<nodeport>`.
 
 Congrats, your application has been deployed in Kubernetes :clap:
 
