@@ -53,10 +53,11 @@ mkdir $HOME/go/src/github.com
 
 1. Twitter API Keys - These can be obtained by registering for a [developer account](https://developer.twitter.com/en/docs/basics/developer-portal/overview) on Twitter. This is only needed for the final lab and takes ~15minutes to set up
 2. An IDE installed (GoLand/Visual Studio Code etc)
+3. Docker + Docker Hub account (optional depending on your choice of cloud deployment)
 
 ## Lab 0 - Install the Prerequisites
 
-### IBM cloud command line interface
+### IBM Cloud command line interface
 
 (If you already have these setup and installed, go straight to [Lab 1](../Lab1/README.md)) // FIX THIS LINK
 
@@ -68,6 +69,10 @@ Once installed, you can access IBM Cloud from your command-line with the prefix 
    **Note:** If you have a federated ID, use `ibmcloud login --sso` to log in to the IBM Cloud CLI. Enter your user name, and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
 
 Once you are all set up you can move straight on to [Lab 1](../Lab1/README.md) // TODO: FIX THIS LINK
+
+### Docker / Docker Hub (optional)
+
+Install [Docker](https://docs.docker.com/get-docker/) on your machine and create an account on [Docker Hub](https://hub.docker.com/)
 
 ## Lab 1 - Creating a basic Golang Application :books:
 
@@ -320,8 +325,93 @@ To see your application running and have it output a joke, go to the main resour
 
 ![Running App URL](./images/RunningAppURL.png)
 
-
 ### Option 2 - Kubernetes in IBM cloud
+
+If you haven't already, install the IBM Cloud CLIs and login, as described in [Lab 0](../Lab0/README.md). Thankfully the new IBM Developer Tools install comes with the following required CLIs:
+
+- IBM Cloud CLI
+- IBM Cloud Kubernetes Service plug-in
+- Kubernetes CLI
+
+Next, if you haven't already, install [Docker](https://docs.docker.com/get-docker/) and make sure you have an account on [Docker Hub](https://hub.docker.com/) set up, as described in [Lab 0](../Lab0/README.md).
+
+### Step 1
+
+You will notice there is a `Dockerfile` included in this repository which you will use to build a docker image on your machine, tag it and then push it to your Docker Hub registry. Using the following commands:
+
+```bash
+docker build -t twitter-bot .
+```
+
+```bash
+docker tag twitter-bot <docker-hub-username>/twitter-bot:v1
+```
+
+```bash
+docker push <docker-hub-username>/twitter-bot:v1
+```
+
+### Step 2
+
+Provision a cluster:
+
+```bash
+ibmcloud ks cluster create classic --name <name-of-cluster>
+```
+
+Once the cluster is provisioned, the kubernetes client CLI kubectl needs to be configured to talk to the provisioned cluster.
+
+Run `ibmcloud ks cluster config --cluster <name-of-cluster>`,
+
+
+// NEEDED??
+
+******************
+and set the `KUBECONFIG` environment variable based on the output of the command. This will make your `kubectl` client point to your new Kubernetes cluster.
+
+(If you're running in a Windows PowerShell environment, the *SET* and/or *EXPORT* equivalent is `$env:KUBECONFIG="<value of KUBECONFIG filename>"`; after setting, confirm the value is in the shell environment with `ls env:KUBECONFIG`)
+
+******************
+
+Once your client is configured, you are ready to deploy your application.
+
+### Step 3
+
+Now the image has been built and pushed up to Docker Hub, you will deploy the application into Kubernetes.
+
+Start by running `twitter-bot`:
+
+```bash
+kubectl run twitter-bot --image=<docker-hub-username>/twitter-bot:v1
+```
+
+This action will take a bit of time. To check the status of the running application, you can use `$ kubectl get pods`.
+
+Once the status reads Running, you need to expose that deployment as a service so you can access it through the IP of the worker nodes. The twitter-bot application listens on port 8080. Run:
+
+```bash
+kubectl expose deployment twitter-bot --type="NodePort" --port=8080
+```
+
+To find the port used on the worker node, examine your service:
+
+```bash
+kubectl get service twitter-bot
+```
+
+`twitter-bot` is now running on your cluster, and exposed to the internet. We need to find out where it is accessible. The worker nodes running in the container service get external IP addresses. Run `ibmcloud ks workers --cluster twitter-bot-cluster`, and note the public IP listed on the `<public-IP>` line.
+
+### Step 4
+
+Now that you have both the address and the port, you can now access the application in the web browser at `<public-IP>:<nodeport>`.
+
+Congrats, your application has been deployed in Kubernetes :clap:
+
+> **Note**: To remove the deployment do the following: 
+> ```bash
+> kubectl delete deployment twitter-bot
+> 
+> kubectl delete service twitter-bot
 
 ## Lab 4 - Tweet Tweet! :bird:
 
