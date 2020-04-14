@@ -337,7 +337,7 @@ Next, if you haven't already, install [Docker](https://docs.docker.com/get-docke
 
 ### Step 1
 
-First you will need to build a docker image on your machine, tag it and then push it to your Docker Hub registry. Using the following commands:
+You will notice there is a `Dockerfile` included in this repository which you will use to build a docker image on your machine, tag it and then push it to your Docker Hub registry. Using the following commands:
 
 ```bash
 docker build -t twitter-bot .
@@ -406,6 +406,12 @@ kubectl get service twitter-bot
 Now that you have both the address and the port, you can now access the application in the web browser at `<public-IP>:<nodeport>`.
 
 Congrats, your application has been deployed in Kubernetes :clap:
+
+> **Note**: To remove the deployment do the following: 
+> ```bash
+> kubectl delete deployment twitter-bot
+> 
+> kubectl delete service twitter-bot
 
 ## Lab 4 - Tweet Tweet! :bird:
 
