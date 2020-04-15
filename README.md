@@ -530,13 +530,13 @@ twitter_auth "github.com/IBMDeveloperUK/twitter-bot-ws/pkg/twitter_auth"
 
 ### Cloud Foundary
 
-ensure everything is saved and then use the following command to push the application up:
+Ensure everything is saved and then use the following command to push the application up:
 
 ```bash
 ibmcloud cf push
 ```
 
-Once the application is in Cloud Foundary you will need to add the API keys to the environment variables - this can be found in the UI:
+Once the application is in Cloud Foundary you will need to add the API keys to the environment variables - this can be completed in the UI:
 
 On your IBM Cloud dashboard navigate to your Cloud Foundary apps and click on it
 ![IBM Cloud Dash](./images/IBMCloudDash.png)
