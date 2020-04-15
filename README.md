@@ -545,10 +545,19 @@ ibmcloud cf push
 
 Once the application is in Cloud Foundary you will need to add the API keys to the environment variables - this can be found in the UI:
 
+On your IBM Cloud dashboard navigate to your Cloud Foundary apps and click on it
 ![IBM Cloud Dash](./images/IBMCloudDash.png)
+
+This will take you to your resources list. Click on your twitter-bot resource
 ![IBM Cloud Resource List](./images/IBMCloudResourceList.png)
+
+When you are on your application, go to the runtime section which can be found in the left side menu
 ![Resouce Overview](./images/ResourceOverview.png)
+
+Click on the heading `Environment variables` 
 ![Env Var Overview](./images/EnvVarOverview.png)
+
+Scroll down to the application variables, add your `ACCESS_TOKEN`, `ACCESS_TOKEN_SECRET`, `CONSUMER_KEY`, `CONSUMER_SECRET` from Twitter and save the configuration
 ![Add Env Vars](./images/AddEnvVars.png)
 
 ### Kubernetes
@@ -566,10 +575,3 @@ docker tag twitter-bot <docker-hub-username>/twitter-bot:v1
 ```bash
 docker push <docker-hub-username>/twitter-bot:v1
 ```
-
-
-add pkg/twitter_auth.go + code
-add the handler to main.go
-add the import of the new package
-export credentials
-test it with a search
