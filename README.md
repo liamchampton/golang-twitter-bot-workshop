@@ -53,7 +53,6 @@ mkdir $HOME/go/src/github.com
 
 1. Twitter API Keys - These can be obtained by registering for a [developer account](https://developer.twitter.com/en/docs/basics/developer-portal/overview) on Twitter. This is only needed for the final lab and takes ~15minutes to set up
 2. An IDE installed (GoLand/Visual Studio Code etc)
-3. Docker + Docker Hub account (optional depending on your choice of cloud deployment)
 
 ## Lab 0 - Install the Prerequisites
 
