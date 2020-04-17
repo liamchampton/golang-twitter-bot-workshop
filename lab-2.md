@@ -1,6 +1,4 @@
-# Lab 2
-
-## Lets get RESTful💃 
+# Lab 2 - Lets get RESTful :dancer: 
 
 ### Step 1
 
@@ -124,4 +122,3 @@ r.HandleFunc("/showjoke", jokeHandler
 If you run the code and navigate to `localhost:8080/showjoke` in your browser you should be presented with a randomly generated joke!
 
 Now the jokes are flowing, lets get it up in the cloud. Continue to Lab 3 to see how this is done.
-

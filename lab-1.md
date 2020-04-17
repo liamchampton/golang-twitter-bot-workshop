@@ -1,6 +1,6 @@
-# Lab 1
+# Lab 1 - Creating a basic Golang Application :books:
 
-## Creating a basic Golang Application📚 
+In this very first Lab you will clone the repository of the project to make the setup slightly easier and ensure you can run a simple "Hello world" program.
 
 ### Step 1
 
@@ -15,4 +15,3 @@ First you need to make sure you can run the `main.go` file \(located in `<PROJEC
 Now the code is running successfully, you can see everything has been set up correctly and you are able to run Go code on your machine.
 
 In the next lab we will turn this up a notch and turn our simple `hello world` program into a web server.
-

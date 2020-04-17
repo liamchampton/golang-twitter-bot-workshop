@@ -1,6 +1,4 @@
-# Lab 4
-
-## Tweet Tweet! 🐦 
+# Lab 4 - Tweet Tweet! :bird:
 
 In this lab, we will look at transforming the application into a twitter bot. To complete this, you must have a twitter developer account set up with the API keys to hand.
 

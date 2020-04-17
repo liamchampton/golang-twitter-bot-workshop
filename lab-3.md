@@ -1,6 +1,4 @@
-# Lab 3
-
-## Up in the ☁ 
+# Lab 3 - Up in the :cloud:
 
 In this lab, we will look at transforming the application into a twitter bot. To complete this, you must have a twitter developer account set up with the API keys to hand.
 
@@ -121,8 +119,5 @@ twitter_auth "github.com/IBMDeveloperUK/twitter-bot-ws/pkg/twitter_auth"
 ```
 
 {% hint style="info" %}
-Note: It is important to keep the `twitter_auth`prefix to prevent it interfering with other declarations of the twitter API package within the code
+Note: It is important to keep the `twitter_auth` prefix to prevent it interfering with other declarations of the twitter API package within the code
 {% endhint %}
-
-
-
