@@ -28,9 +28,7 @@ Windows Powershell
 iex(New-Object Net.WebClient).DownloadString('https://clis.cloud.ibm.com/install/powershell')
 ```
 
-{% hint style="info" %}
-Note: If you encounter errors like The underlying connection was closed: An unexpected error occurred on a send, make sure you have .Net Framework 4.5 or later installed. Also try to enable TLS 1.2 protocol by running the following command:
-{% endhint %}
+> **Note**: If you encounter errors like The underlying connection was closed: An unexpected error occurred on a send, make sure you have .Net Framework 4.5 or later installed. Also try to enable TLS 1.2 protocol by running the following command:
 
 ```bash
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
@@ -52,23 +50,17 @@ Create a public application
 
 ![Create Public Application](./images/CreatePublicApp.png)
 
-{% hint style="info" %}
-IMPORTANT PART: First, Make sure the Go runtime is selected and then fill in the detail boxes shown below, indicated with a red arrow. The rest will auto-fill as you type or already be populated with text. The hostname and domain can be left with the defaults already populated.
-{% endhint %}
+**IMPORTANT PART**: First, Make sure the Go runtime is selected and then fill in the detail boxes shown below, indicated with a red arrow. The rest will auto-fill as you type or already be populated with text. The hostname and domain can be left with the defaults already populated.
 
 ![CF App Details 1](./images/CFAppDetails1.png)
 
-{% hint style="info" %}
 Do not be alarmed at the pricing plan, you will not be exceeding the free allowance with this workshop. "First 186 GB-Hour's free per month for one or more applications built using any of the Community runtimes."
-{% endhint %}
 
 Once all the fields are completed, click create
 
 ![CF APP Details 2](./images/CFAppDetails2.png)
 
-{% hint style="info" %}
-Note: The app could take a minute or two to start up so be patient :wink:
-{% endhint %}
+> **Note**: The app could take a minute or two to start up so be patient :wink:
 
 ## Step 3
 
@@ -90,9 +82,7 @@ In a terminal window, from within your project directory \(`$HOME/go/src/github.
 
 1. Make sure you are logged into to the IBM Cloud via the CLI: `ibmcloud login`
 
-{% hint style="info" %}
-Note: If you have a federated ID, use `ibmcloud login --sso` to log in to the IBM Cloud CLI. Enter your user name, and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the --sso and succeeds with the --sso option.
-{% endhint %}
+> **Note**: If you have a federated ID, use `ibmcloud login --sso` to log in to the IBM Cloud CLI. Enter your user name, and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the --sso and succeeds with the --sso option.
 
 1. Enter your IBM Cloud credentials when prompted
 2. Target Cloud Foundary with IBM Cloud by using: `ibmcloud target --cf`

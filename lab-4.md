@@ -4,15 +4,15 @@ In this lab, we will look at transforming the application into a twitter bot. To
 
 ### Step 1
 
-If you haven't already, register for a [developer account](https://developer.twitter.com/en/docs/basics/developer-portal/overview) so you can access Twitter API keys for your application. As previously mentioned this could take a few minutes so you'll need to be patient! 🙂 
+If you haven't already, register for a [developer account](https://developer.twitter.com/en/docs/basics/developer-portal/overview) so you can access Twitter API keys for your application. As previously mentioned this could take a few minutes so you'll need to be patient! :smile:
 
-![Twitter Developer Sign up](.gitbook/assets/twitterdevacc.png)
+![Twitter Developer Sign up](./images/TwitterDevAcc.png)
 
 ### TODO: How to create a client app in twitter UI
 
 ### Step 2
 
-Now that you have created an app in Twitter and your deployment platform is set up, lets quickly code it 🍻 
+Now that you have created an app in Twitter and your deployment platform is set up, lets quickly code it :beers:
 
 1. Create a new folder inside your `pkg` directory and call it `twitter_auth`
 2. Inside your `twitter_auth` directory create a file called `twitter_auth.go`
@@ -118,9 +118,7 @@ Because the `twitter_auth` is within its own package you will also need to add i
 twitter_auth "github.com/IBMDeveloperUK/twitter-bot-ws/pkg/twitter_auth"
 ```
 
-{% hint style="info" %}
-Note: It is important to keep the `twitter_auth`prefix to prevent it interfering with other declarations of the twitter API package within the code
-{% endhint %}
+> **Note**: It is important to keep the `twitter_auth`prefix to prevent it interfering with other declarations of the twitter API package within the code
 
 1. Test it compiles by running the application locally \(don't hit the new route just yet as it will tweet\)
 2. If it compiles successfully, push it up to the cloud where you are hosting it.
@@ -137,21 +135,20 @@ Once the application is in Cloud Foundary you will need to add the API keys to t
 
 On your IBM Cloud dashboard navigate to your Cloud Foundary apps and click on it
 
-![IBM Cloud Dash](.gitbook/assets/ibmclouddash.png)
+![IBM Cloud Dash](./images/IBMCloudDash.png)
 
 This will take you to your resources list. Click on your twitter-bot resource
 
-![IBM Cloud Resource List](.gitbook/assets/ibmcloudresourcelist.png)
+![IBM Cloud Resource List](./images/IBMCloudResourceList.png)
 
 When you are on your application, go to the runtime section which can be found in the left side menu
 
-![Resouce Overview](.gitbook/assets/resourceoverview.png)
+![Resouce Overview](./images/ResourceOverview.png)
 
 Click on the heading `Environment variables`
 
-![Env Var Overview](.gitbook/assets/envvaroverview.png)
+![Env Var Overview](./images/EnvVarOverview.png)
 
 Scroll down to the application variables, add your `ACCESS_TOKEN`, `ACCESS_TOKEN_SECRET`, `CONSUMER_KEY`, `CONSUMER_SECRET` from Twitter and save the configuration
 
-![Add Env Vars](.gitbook/assets/addenvvars.png)
-
+![Add Env Vars](./images/AddEnvVars.png)

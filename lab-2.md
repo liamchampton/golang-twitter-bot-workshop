@@ -12,9 +12,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 ```
 
-{% hint style="info" %}
-**Note**: You will also need to add the following import to your code \(this makes the terminal logs look pretty\) :smile:
-{% endhint %}
+> **Note**: You will also need to add the following import to your code \(this makes the terminal logs look pretty\) :smile:
 
 ```go
 logr "github.com/sirupsen/logrus"
@@ -34,9 +32,7 @@ Now you have got a route handler, you need to create the web server to invoke it
     logr.Error(http.ListenAndServe(":8080", nil))
 ```
 
-{% hint style="info" %}
-**Note**: If your plugin didn't already add the gorilla mux import, add the following line of code into your imports
-{% endhint %}
+> **Note**: If your plugin didn't already add the gorilla mux import, add the following line of code into your imports
 
 ```go
 "github.com/gorilla/mux"
@@ -46,9 +42,7 @@ Now you have got a route handler, you need to create the web server to invoke it
 
 Head back to your terminal window and run your code using the command `go run cmd/main.go`. This will start up a server on port :8080.
 
-{% hint style="info" %}
-**Note**: You may be prompted by your system to allow a network connection \(you need to allow this otherwise the application may not run corretly\)
-{% endhint %}
+> **Note**: You may be prompted by your system to allow a network connection (you need to allow this otherwise the application may not run corretly)
 
 Open up a browser and type `localhost:8080` into the top URL bar and you should see the output from the `handler()` function on your screen.
 
