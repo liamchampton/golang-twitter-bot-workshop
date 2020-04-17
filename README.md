@@ -4,7 +4,7 @@ This workshop will show you how to build a simple Golang application and then de
 
 ## Golang Installation
 
-### Automated Installation (**Ubuntu 16.04+ & macOS only**)
+### Automated Installation \(**Ubuntu 16.04+ & macOS only**\)
 
 Use [this open source repository](https://github.com/canha/golang-tools-install-script) to install Golang onto your machine.
 
@@ -52,33 +52,36 @@ mkdir $HOME/go/src/github.com
 ## Prerequisites
 
 1. Twitter API Keys - These can be obtained by registering for a [developer account](https://developer.twitter.com/en/docs/basics/developer-portal/overview) on Twitter. This is only needed for the final lab and takes ~15minutes to set up
-2. An IDE installed (GoLand/Visual Studio Code etc)
+2. An IDE installed \(GoLand/Visual Studio Code etc\)
 
 ## Lab 0 - Install the Prerequisites
 
 ### IBM Cloud command line interface
 
-(If you already have these setup and installed, go straight to [Lab 1](../Lab1/README.md)) // FIX THIS LINK
+\(If you already have these setup and installed, go straight to [Lab 1](https://github.com/liamchampton/golang-twitter-bot-workshop/tree/efa5cd3e0eb58088d221e17d65c2860f1cf99420/Lab1/README.md)\) // FIX THIS LINK
 
 1. Install the [IBM Cloud command-line interface from this link](https://cloud.ibm.com/docs/cli?topic=cloud-cli-install-ibmcloud-cli).
-Once installed, you can access IBM Cloud from your command-line with the prefix `ibmcloud`.
+
+   Once installed, you can access IBM Cloud from your command-line with the prefix `ibmcloud`.
+
 2. Log in to the IBM Cloud CLI: `ibmcloud login`.
 3. Enter your IBM Cloud credentials when prompted.
 
    **Note:** If you have a federated ID, use `ibmcloud login --sso` to log in to the IBM Cloud CLI. Enter your user name, and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
 
-Once you are all set up you can move straight on to [Lab 1](../Lab1/README.md) // TODO: FIX THIS LINK
+Once you are all set up you can move straight on to [Lab 1](https://github.com/liamchampton/golang-twitter-bot-workshop/tree/efa5cd3e0eb58088d221e17d65c2860f1cf99420/Lab1/README.md) // TODO: FIX THIS LINK
 
 ## Lab 1 - Creating a basic Golang Application :books:
 
 ### Step 1
+
 // TODO: FIX THIS LINK
 
-Clone [this]() repository into `$HOME/<user>/go/github.com` and then open the `<PROJECT NAME HERE>` directory into your preferred editor. (I use Visual Studio Code with the recommended [Go extension](https://code.visualstudio.com/docs/languages/go) installed from the marketplace)
+Clone [this](./) repository into `$HOME/<user>/go/github.com` and then open the `<PROJECT NAME HERE>` directory into your preferred editor. \(I use Visual Studio Code with the recommended [Go extension](https://code.visualstudio.com/docs/languages/go) installed from the marketplace\)
 
 ### Step 2
 
-First you need to make sure you can run the `main.go` file (located in `<PROJECTNAME>/cmd`). To do this, navigate to the directory in a new terminal window and use the command `go run cmd/main.go`. This will compile the code and run the program without building a binary (more on this later). The output should be `Hello Fellow Gopher!`.
+First you need to make sure you can run the `main.go` file \(located in `<PROJECTNAME>/cmd`\). To do this, navigate to the directory in a new terminal window and use the command `go run cmd/main.go`. This will compile the code and run the program without building a binary \(more on this later\). The output should be `Hello Fellow Gopher!`.
 
 Now the code is running successfully, you can see everything has been set up correctly and you are able to run Go code on your machine.
 
@@ -92,7 +95,7 @@ In this lab you are going to create a web app with some routes. To do this you w
 
 First you will need to add a handler function to accept a router request to display a page. To do this, use the small code snippet below. Edit the code to include your name or a sentence and place it into the `main()` function.
 
-```golang
+```go
 func handler(w http.ResponseWriter, r *http.Request) {
     name := "<your name here>"
     logr.Info("Received request for the home page")
@@ -100,9 +103,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 ```
 
-> **Note**: You will also need to add the follow import to your code (this makes the terminal logs look pretty) :smile:
+> **Note**: You will also need to add the follow import to your code \(this makes the terminal logs look pretty\) :smile:
 
-```golang
+```go
 logr "github.com/sirupsen/logrus"
 ```
 
@@ -110,7 +113,7 @@ logr "github.com/sirupsen/logrus"
 
 Now you have got a route handler, you need to create the web server to invoke it. To do this, use the code snippet below and insert it into your `main()` function. Instead of using the standard go `net/http` library's we will use a more powerful 3rd party import, `gorilla mux`.
 
-```golang
+```go
 // Create Server and Route Handlers
     r := mux.NewRouter()
     r.HandleFunc("/", handler)
@@ -122,7 +125,7 @@ Now you have got a route handler, you need to create the web server to invoke it
 
 > **Note**: If your plugin didnt already add the gorilla mux import, add the following line of code to your imports
 
-```golang
+```go
 "github.com/gorilla/mux"
 ```
 
@@ -131,7 +134,8 @@ This code will start up a server on port 8080.
 ### Step 3
 
 Head back to your terminal window and run your code using the command `go run cmd/main.go`.
-> **Note** You may be prompted by your system to allow a network connection (you need to allow this otherwise the application may not run correctly)
+
+> **Note** You may be prompted by your system to allow a network connection \(you need to allow this otherwise the application may not run correctly\)
 
 Open up a browser and type `localhost:8080` into the top URL bar and you should see the output from the `handler()` function on your screen.
 
@@ -141,7 +145,7 @@ The server is up and running but this is very basic. Type `control+c` in your te
 
 Firstly, you will need to write the code that invokes the API to get the data. The code snippet below is a new function.
 
-```golang
+```go
 func getJoke() (string, error) {
     logr.Infof("Getting joke from API..")
 
@@ -180,7 +184,7 @@ Now the API call is in place, the next thing you need to do is add the handler, 
 
 To do this, add the new function shown below and then invoke it in the `main()` function, just like you did with the previous handler.
 
-```golang
+```go
 func jokeHandler(w http.ResponseWriter, r *http.Request) {
     w.WriteHeader(http.StatusOK) // Write the status code 200
     logr.Infof("Received request to show a joke")
@@ -197,14 +201,14 @@ func jokeHandler(w http.ResponseWriter, r *http.Request) {
 }
 ```
 
-```golang
+```go
 // Add this line below the existing "/" route 
 r.HandleFunc("/showjoke", jokeHandler)
 ```
 
 If you run the code and navigate to `localhost:8080/showjoke` in your browser you should now be presented with a randomly generated joke!
 
-Now the jokes are flowing, lets get it up in the cloud. Continue to [Lab 3](../Lab3/README.md) to see how this is done 
+Now the jokes are flowing, lets get it up in the cloud. Continue to [Lab 3](https://github.com/liamchampton/golang-twitter-bot-workshop/tree/efa5cd3e0eb58088d221e17d65c2860f1cf99420/Lab3/README.md) to see how this is done
 
 ## Lab 3 - Up in the :cloud:
 
@@ -239,10 +243,10 @@ iex(New-Object Net.WebClient).DownloadString('https://clis.cloud.ibm.com/install
 > **Note**: If you encounter errors like The underlying connection was closed: An unexpected error occurred on a send, make sure you have .Net Framework 4.5 or later installed. Also try to enable TLS 1.2 protocol by running the following command:
 
 ```bash
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
 ```
 
-- Install the [Cloud Foundary cli tool](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html#pkg). This will allow you to push your app to Cloud Foundary
+* Install the [Cloud Foundary cli tool](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html#pkg). This will allow you to push your app to Cloud Foundary
 
 You now need to prepare your application for Cloud Foundary. To do this, in the top level directory of your project create a file called `manifest.yml`. This will be the building blocks for your application when pushing it up to the cloud. Inside this add the following code
 
@@ -262,28 +266,27 @@ applications:
 
 The following screenshots illustrate how to set up a Cloud Foundary application in IBM Cloud. Follow these simple steps to get a resource up and running.
 
-Login to IBM Cloud (or create an account if you still havent done so)
+Login to IBM Cloud \(or create an account if you still havent done so\)
 
-![IBM Cloud Login](./images/IBMCloudLogin.png)
+![IBM Cloud Login](.gitbook/assets/ibmcloudlogin.png)
 
 Navigate to the handburger menu on the left hand side and select "Cloud Foundary"
 
-![IBM Cloud Left Panel](./images/IBMCloudLeftPan.png)
+![IBM Cloud Left Panel](.gitbook/assets/ibmcloudleftpan.png)
 
 Create a public application
 
-![Create Public Application](./images/CreatePublicApp.png)
-
+![Create Public Application](.gitbook/assets/createpublicapp.png)
 
 **IMPORTANT PART**: First, Make sure the Go runtime is selected and then fill in the detail boxes shown below, indicated with a red arrow. The rest will auto-fill as you type or already be populated with text. The hostname and domain can be left with the defaults already populated.
 
-![CF App Details 1](./images/CFAppDetails1.png)
+![CF App Details 1](.gitbook/assets/cfappdetails1.png)
 
 > **Note** Do not be alarmed at the pricing plan, you will not be exceeding the free allowance with this workshop. "First 186 GB-Hour's free per month for one or more applications built using any of the Community runtimes."
 
 Once all the fields are completed, click create
 
-![CF APP Details 2](./images/CFAppDetails2.png)
+![CF APP Details 2](.gitbook/assets/cfappdetails2.png)
 
 > **Note**: The app could take a minute or two to start up so be patient :wink:
 
@@ -303,22 +306,21 @@ applications:
 
 ### Step 4
 
-In a terminal window, from within your project directory (`$HOME/go/src/github.com/<projectname>`), you are going to login to your IBM Cloud account, target Cloud Foundary and then push your application up. To do this, follow the simple steps that follow:
+In a terminal window, from within your project directory \(`$HOME/go/src/github.com/<projectname>`\), you are going to login to your IBM Cloud account, target Cloud Foundary and then push your application up. To do this, follow the simple steps that follow:
 
 1. Make sure you are logged into to the IBM Cloud via the CLI: `ibmcloud login`
 
 > **Note:** If you have a federated ID, use `ibmcloud login --sso` to log in to the IBM Cloud CLI. Enter your user name, and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the --sso and succeeds with the --sso option.
 
-
-2. Enter your IBM Cloud credentials when prompted
-3. Target Cloud Foundary with IBM Cloud by using: `ibmcloud target --cf`
-4. Push your app into Cloud Foundary: `ibmcloud cf push`
+1. Enter your IBM Cloud credentials when prompted
+2. Target Cloud Foundary with IBM Cloud by using: `ibmcloud target --cf`
+3. Push your app into Cloud Foundary: `ibmcloud cf push`
 
 If the push is successful, your application will be created and you should see it running in the UI after a minute or two :clap:
 
 To see your application running and have it output a joke, go to the main resource page and click on the `Visit App URL`. At the end of the URL append `/showjoke`
 
-![Running App URL](./images/RunningAppURL.png)
+![Running App URL](.gitbook/assets/runningappurl.png)
 
 ## Lab 4 - Tweet Tweet! :bird:
 
@@ -328,11 +330,9 @@ In this lab, we will look at transforming the application into a twitter bot. To
 
 If you haven't already, register for a [developer account](https://developer.twitter.com/en/docs/basics/developer-portal/overview) so you can access Twitter API keys for your application. As previously mentioned this could take a few minutes so you'll need to be patient! :smile:
 
-![Twitter Developer Sign up](./images/TwitterDevAcc.png)
+![Twitter Developer Sign up](.gitbook/assets/twitterdevacc.png)
 
-
-TODO: How to create an client app in twitter UI
----
+## TODO: How to create an client app in twitter UI
 
 ### Step 2
 
@@ -342,7 +342,7 @@ Now that you have created an app in Twitter and your deployment platform is set 
 2. Inside your `twitter_auth` directory create a file called `twitter_auth.go`
 3. The first thing you need to do is authenticate with twitter and connect to the app you created. To do this, read and add the following code to this file:
 
-```golang
+```go
 package twitterauth
 
 import (
@@ -400,9 +400,9 @@ func GetUserClient(creds *Credentials) (*twitter.Client, error) {
 }
 ```
 
- Now that the authentication package has been created you need to call this from your `main.go` and add another route handler. To do this start by adding a new function into your `main.go`:
+Now that the authentication package has been created you need to call this from your `main.go` and add another route handler. To do this start by adding a new function into your `main.go`:
 
-```golang
+```go
 func TweetHandler(w http.ResponseWriter, r *http.Request) {
     w.WriteHeader(http.StatusOK)
     dadJoke, err := getJoke()
@@ -431,20 +431,21 @@ func TweetHandler(w http.ResponseWriter, r *http.Request) {
 ```
 
 Once the new function has been added, in your `main()` function add the following line, just like you did before with the `jokeHandler`:
-```golang
+
+```go
 r.HandleFunc("/tweetjoke", TweetHandler)
 ```
 
 Because the `twitter_auth` is within its own package you will also need to add it to your imports. This will be a relative path to the file on your machine. For example mine is:
 
-```golang
+```go
 twitter_auth "github.com/IBMDeveloperUK/twitter-bot-ws/pkg/twitter_auth"
 ```
 
-> :rotating_light: **Note**: it is important to keep the `twitter_auth` prefix to prevent it interfering with other declarations of the twitter API package within the code :rotating_light:
+> :rotating\_light: **Note**: it is important to keep the `twitter_auth` prefix to prevent it interfering with other declarations of the twitter API package within the code :rotating\_light:
 
-5. Test it compiles by running the application locally (don't hit the new route just yet as it will tweet)
-6. If it compiles succesfully, push it up to the cloud where you are hosting it.
+1. Test it compiles by running the application locally \(don't hit the new route just yet as it will tweet\)
+2. If it compiles succesfully, push it up to the cloud where you are hosting it.
 
 ### Cloud Foundary
 
@@ -458,20 +459,21 @@ Once the application is in Cloud Foundary you will need to add the API keys to t
 
 On your IBM Cloud dashboard navigate to your Cloud Foundary apps and click on it
 
-![IBM Cloud Dash](./images/IBMCloudDash.png)
+![IBM Cloud Dash](.gitbook/assets/ibmclouddash.png)
 
 This will take you to your resources list. Click on your twitter-bot resource
 
-![IBM Cloud Resource List](./images/IBMCloudResourceList.png)
+![IBM Cloud Resource List](.gitbook/assets/ibmcloudresourcelist.png)
 
 When you are on your application, go to the runtime section which can be found in the left side menu
 
-![Resouce Overview](./images/ResourceOverview.png)
+![Resouce Overview](.gitbook/assets/resourceoverview.png)
 
 Click on the heading `Environment variables`
 
-![Env Var Overview](./images/EnvVarOverview.png)
+![Env Var Overview](.gitbook/assets/envvaroverview.png)
 
 Scroll down to the application variables, add your `ACCESS_TOKEN`, `ACCESS_TOKEN_SECRET`, `CONSUMER_KEY`, `CONSUMER_SECRET` from Twitter and save the configuration
 
-![Add Env Vars](./images/AddEnvVars.png)
+![Add Env Vars](.gitbook/assets/addenvvars.png)
+
