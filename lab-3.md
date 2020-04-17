@@ -1,123 +1,105 @@
 # Lab 3 - Up in the :cloud:
 
-In this lab, we will look at transforming the application into a twitter bot. To complete this, you must have a twitter developer account set up with the API keys to hand.
+Here you will deploy your application into a cloud environment. Because it is straight forward in this Lab we will use IBM Cloud Foundary.
+
+Before you can complete any of the next steps, you must either [sign up](https://cloud.ibm.com/registration) for an IBM Cloud account or make sure you are [logged into](https://cloud.ibm.com/login) to your existing one.
+
+## IBM Cloud Foundary deployment
 
 ### Step 1
 
-If you haven't already, register for a [developer account](https://developer.twitter.com/en/docs/basics/developer-portal/overview) so you can access Twitter API keys for your application. As previously mentioned this could take a few minutes so you'll need to be patient! 🙂 
+Install the [ibmcloud cli tool](https://cloud.ibm.com/docs/cli?topic=cloud-cli-install-ibmcloud-cli#shell_install) with the following commands. With this you can access IBM Cloud from your command-line with the prefix ibmcloud
 
-![Twitter Developer Sign up](.gitbook/assets/twitterdevacc.png)
+Mac
 
-### TODO: How to create a client app in twitter UI
-
-### Step 2
-
-Now that you have created an app in Twitter and your deployment platform is set up, lets quickly code it 🍻 
-
-1. Create a new folder inside your `pkg` directory and call it `twitter_auth`
-2. Inside your `twitter_auth` directory create a file called `twitter_auth.go`
-3. The first thing you need to do is authenticate with twitter and connect to the app you created. To do this, read and add the following code to this file:
-
-```go
-package twitterauth
-
-import (
-    "os"
-
-    "github.com/dghubble/go-twitter/twitter"
-    "github.com/dghubble/oauth1"
-    logr "github.com/sirupsen/logrus"
-)
-
-// Credentials struct contains API credentials pulled from env vars:
-type Credentials struct {
-    ConsumerKey       string
-    ConsumerSecret    string
-    AccessToken       string
-    AccessTokenSecret string
-}
-
-func GetCredentials() Credentials {
-    creds := Credentials{
-        AccessToken:       os.Getenv("ACCESS_TOKEN"),
-        AccessTokenSecret: os.Getenv("ACCESS_TOKEN_SECRET"),
-        ConsumerKey:       os.Getenv("CONSUMER_KEY"),
-        ConsumerSecret:    os.Getenv("CONSUMER_SECRET"),
-    }
-
-    return creds
-}
-
-/* GetUserClient:
-Input = credentials
-Return = authenticated twitter client, error
-*/
-func GetUserClient(creds *Credentials) (*twitter.Client, error) {
-
-    config := oauth1.NewConfig(creds.ConsumerKey, creds.ConsumerSecret)
-    token := oauth1.NewToken(creds.AccessToken, creds.AccessTokenSecret)
-
-    httpClient := config.Client(oauth1.NoContext, token)
-    client := twitter.NewClient(httpClient)
-
-    verifyParams := &twitter.AccountVerifyParams{
-        SkipStatus:   twitter.Bool(true),
-        IncludeEmail: twitter.Bool(true),
-    }
-
-    user, _, err := client.Accounts.VerifyCredentials(verifyParams)
-    if err != nil {
-        logr.Error(err)
-        return nil, err
-    }
-
-    logr.Infof("User Account Info:\n%+v\n", user)
-    return client, nil
-}
+```bash
+curl -fsSL https://clis.cloud.ibm.com/install/osx | sh
 ```
 
-Now that the authentication package has been created you need to call this from your `main.go` and add another route handler. To do this start by adding a new function into your `main.go`:
+Linux
 
-```go
-func TweetHandler(w http.ResponseWriter, r *http.Request) {
-    w.WriteHeader(http.StatusOK)
-    dadJoke, err := getJoke()
-    if err != nil {
-        logr.Error(err)
-        os.Exit(1)
-    }
-    w.Write([]byte(fmt.Sprintf("The following joke will be tweeted, %s\n", dadJoke)))
-
-    creds := twitter_auth.GetCredentials()
-
-    client, err := twitter_auth.GetUserClient(&creds)
-    if err != nil {
-        logr.Error("Error getting Twitter Client")
-        logr.Error(err)
-    }
-
-    tweet, resp, err := client.Statuses.Update("Todays dad joke is: "+dadJoke, nil)
-    if err != nil {
-        logr.Error(err)
-    }
-
-    logr.Infof("%+v\n", resp)
-    logr.Infof("%+v\n", tweet)
-}
+```bash
+curl -fsSL https://clis.cloud.ibm.com/install/linux | sh
 ```
 
-Once the new function has been added, in your `main()` function add the following line, just like you did before with the `jokeHandler`:
+Windows Powershell
 
-```go
-r.HandleFunc("/tweetjoke", TweetHandler)
-```
-
-Because the `twitter_auth` is within its own package you will also need to add it to your imports. This will be a relative path to the file on your machine. For example mine is:
-
-```go
-twitter_auth "github.com/IBMDeveloperUK/twitter-bot-ws/pkg/twitter_auth"
+```bash
+iex(New-Object Net.WebClient).DownloadString('https://clis.cloud.ibm.com/install/powershell')
 ```
 
 {% hint style="info" %}
-Note: It is important to keep the `twitter_auth` prefix to prevent it interfering with other declarations of the twitter API package within the code
+Note: If you encounter errors like The underlying connection was closed: An unexpected error occurred on a send, make sure you have .Net Framework 4.5 or later installed. Also try to enable TLS 1.2 protocol by running the following command:
 {% endhint %}
+
+```bash
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+```
+
+## Step 2
+
+The following screenshots illustrate how to set up a Cloud Foundary application in IBM Cloud. Follow these simple steps to get a resource up and running.
+
+Login to IBM Cloud \(or create an account if you still havent done so\)
+
+![IBM Cloud Login](./images/IBMCloudLogin.png)
+
+Navigate to the hamburger menu on the left hand side and select "Cloud Foundary"
+
+![IBM Cloud Left Panel](./images/IBMCloudLeftPan.png)
+
+Create a public application
+
+![Create Public Application](./images/CreatePublicApp.png)
+
+{% hint style="info" %}
+IMPORTANT PART: First, Make sure the Go runtime is selected and then fill in the detail boxes shown below, indicated with a red arrow. The rest will auto-fill as you type or already be populated with text. The hostname and domain can be left with the defaults already populated.
+{% endhint %}
+
+![CF App Details 1](./images/CFAppDetails1.png)
+
+{% hint style="info" %}
+Do not be alarmed at the pricing plan, you will not be exceeding the free allowance with this workshop. "First 186 GB-Hour's free per month for one or more applications built using any of the Community runtimes."
+{% endhint %}
+
+Once all the fields are completed, click create
+
+![CF APP Details 2](./images/CFAppDetails2.png)
+
+{% hint style="info" %}
+Note: The app could take a minute or two to start up so be patient :wink:
+{% endhint %}
+
+## Step 3
+
+You now need to prepare your application for Cloud Foundary. To do this, in the top level directory of your project create a file called `manifest.yml`. This will be the building blocks for your application when pushing it up to the cloud. Inside this add the following code. **Be sure to change the commented code!**
+
+```yaml
+---
+applications:
+- name: <name of your app as it appears in IBM Cloud> e.g Twitter-Joke-Bot
+  random-route: true
+  memory: 128M
+  env:
+    GO_INSTALL_PACKAGE_SPEC: <name of the path to your main.go file on your system> e.g github.com/twitter-bot/cmd
+```
+
+## Step 4
+
+In a terminal window, from within your project directory \(`$HOME/go/src/github.com/<projectname>`\), you are going to login to your IBM Cloud account, target Cloud Foundary and then push your application up. To do this, follow the simple steps that follow:
+
+1. Make sure you are logged into to the IBM Cloud via the CLI: `ibmcloud login`
+
+{% hint style="info" %}
+Note: If you have a federated ID, use `ibmcloud login --sso` to log in to the IBM Cloud CLI. Enter your user name, and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the --sso and succeeds with the --sso option.
+{% endhint %}
+
+1. Enter your IBM Cloud credentials when prompted
+2. Target Cloud Foundary with IBM Cloud by using: `ibmcloud target --cf`
+3. Push your app into Cloud Foundary: `ibmcloud cf push`
+
+If the push is successful, your application will be created and you should see it running in the UI after a minute or two :clap:
+
+To see your application running and have it output a joke, go to the main resource page and click on the `Visit App URL`. At the end of the URL append `/showjoke`
+
+![Running App URL](./images/RunningAppURL.png)
