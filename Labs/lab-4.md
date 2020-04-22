@@ -152,3 +152,7 @@ Click on the heading `Environment variables`
 Scroll down to the application variables, add your `ACCESS_TOKEN`, `ACCESS_TOKEN_SECRET`, `CONSUMER_KEY`, `CONSUMER_SECRET` from Twitter and save the configuration
 
 ![Add Env Vars](./images/AddEnvVars.png)
+
+Now these have been saved, your application will have access to them. Lets try it out?
+
+Click on the "Visit App URL" and append `/tweetjoke` to the end of the URL. This will tweet a random joke and you can check this by looking on your twitter feed!
