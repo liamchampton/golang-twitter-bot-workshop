@@ -40,25 +40,25 @@ The following screenshots illustrate how to set up a Cloud Foundary application 
 
 Login to IBM Cloud \(or create an account if you still havent done so\)
 
-![IBM Cloud Login](./images/IBMCloudLogin.png)
+![IBM Cloud Login](../images/IBMCloudLogin.png)
 
 Navigate to the hamburger menu on the left hand side and select "Cloud Foundary"
 
-![IBM Cloud Left Panel](./images/IBMCloudLeftPan.png)
+![IBM Cloud Left Panel](../images/IBMCloudLeftPan.png)
 
 Create a public application
 
-![Create Public Application](./images/CreatePublicApp.png)
+![Create Public Application](../images/CreatePublicApp.png)
 
 **IMPORTANT PART**: First, Make sure the Go runtime is selected and then fill in the detail boxes shown below, indicated with a red arrow. The rest will auto-fill as you type or already be populated with text. The hostname and domain can be left with the defaults already populated.
 
-![CF App Details 1](./images/CFAppDetails1.png)
+![CF App Details 1](../images/CFAppDetails1.png)
 
 Do not be alarmed at the pricing plan, you will not be exceeding the free allowance with this workshop. "First 186 GB-Hour's free per month for one or more applications built using any of the Community runtimes."
 
 Once all the fields are completed, click create
 
-![CF APP Details 2](./images/CFAppDetails2.png)
+![CF APP Details 2](../images/CFAppDetails2.png)
 
 > **Note**: The app could take a minute or two to start up so be patient :wink:
 
@@ -92,4 +92,4 @@ If the push is successful, your application will be created and you should see i
 
 To see your application running and have it output a joke, go to the main resource page and click on the `Visit App URL`. At the end of the URL append `/showjoke`
 
-![Running App URL](./images/RunningAppURL.png)
+![Running App URL](../images/RunningAppURL.png)
