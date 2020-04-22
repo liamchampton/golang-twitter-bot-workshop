@@ -243,7 +243,7 @@ iex(New-Object Net.WebClient).DownloadString('https://clis.cloud.ibm.com/install
 > **Note**: If you encounter errors like The underlying connection was closed: An unexpected error occurred on a send, make sure you have .Net Framework 4.5 or later installed. Also try to enable TLS 1.2 protocol by running the following command:
 
 ```bash
-
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 ```
 
 * Install the [Cloud Foundary cli tool](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html#pkg). This will allow you to push your app to Cloud Foundary
