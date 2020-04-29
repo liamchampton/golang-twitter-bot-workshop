@@ -1,10 +1,12 @@
 # Lab 2 - Lets get RESTful :dancer: 
 
+In this lab you are going to create a web app with some routes. To do this you will use the 3rd party import `gorilla/mux`. Some bedtime reading about this can be found [here](https://github.com/gorilla/mux). You will then extend this to output a random joke by calling an open API without the need for authentication. The API in this lab is a random dad joke API but feel free to explore and chose another if you'd like, the principals are the same!
+
 ### Step 1
 
-In this lab you are going to create a web app with some routes. To do this you will use the 3rd party import `gorilla/mux`. Some bedtime reading about this can be found [here](https://github.com/gorilla/mux). We will then follow this up to output a random joke by calling an open API without the need for authentication. The API in this lab is a dad joke API but feel free to explore and chose another if you'd like, the principals are the same!
+We will start by creating a route handler. Below your `main()` function in `main.go`, add the following snippet of code.
 
-```go
+```golang
 func handler(w http.ResponseWriter, r *http.Request) {
     name := "<your name here>"
     logr.Info("Received request for the home page")
@@ -14,15 +16,15 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 > **Note**: You will also need to add the following import to your code \(this makes the terminal logs look pretty\) :smile:
 
-```go
+```golang
 logr "github.com/sirupsen/logrus"
 ```
 
 ### Step 2
 
-Now you have got a route handler, you need to create the web server to invoke it. To do this, use the code snippet below and insert it into your `main()` function. Instead of using the standard go `net/http` library's we will use a more powerful 3rd party import, `gorilla mux`.
+Now you have got a route handler, you need to create the web server to invoke it. To do this, use the code snippet below and insert it into your `main()` function. Instead of using the standard go `net/http` library's you will use a more powerful 3rd party import, `gorilla mux`.
 
-```go
+```golang
 // Create Server and Route Handlers
     r := mux.NewRouter()
     r.HandleFunc("/", handler)
@@ -34,7 +36,7 @@ Now you have got a route handler, you need to create the web server to invoke it
 
 > **Note**: If your plugin didn't already add the gorilla mux import, add the following line of code into your imports
 
-```go
+```golang
 "github.com/gorilla/mux"
 ```
 
@@ -48,11 +50,11 @@ Open up a browser and type `localhost:8080` into the top URL bar and you should 
 
 ### Step 4
 
-The server is up and running but this is very basic. Use `control+c` in your terminal to terminate the server connection. Next, you will add in a route to call an API without any authentication. In this workshop, the one provided calls a random joke generator but you can change this API to be whatever you'd like.
+The server is up and running but this is very basic. Use `control+c` in your terminal to terminate the server connection. Next, you will add in the route to call the random joke API without any authentication.
 
 To do this, add the the code snippet below as a new function inside your `main.go` file.
 
-```go
+```golang
 func getJoke() (string, error) {
     logr.Infof("Getting joke from API..")
 
@@ -87,11 +89,11 @@ func getJoke() (string, error) {
 
 This will return a string of the body as you want to see the joke in plain text on the page and nil, since there is no error at this point. 
 
-Now the API call is in place, the next thing you need to do is add another handler, just like you did in Step 1.
+Now the API call function is in place, the next thing you need to do is add another route handler, just like you did in Step 1.
 
 To do this, add the new function shown below and then invoke it in the `main()` function, just like you did with the previous handler.
 
-```go
+```golang
 func jokeHandler(w http.ResponseWriter, r *http.Request) {
     w.WriteHeader(http.StatusOK) // Write the status code 200
     logr.Infof("Received request to show a joke")
@@ -115,4 +117,4 @@ r.HandleFunc("/showjoke", jokeHandler
 
 If you run the code and navigate to `localhost:8080/showjoke` in your browser you should be presented with a randomly generated joke!
 
-Now the jokes are flowing, lets get it up in the cloud. Continue to Lab 3 to see how this is done.
+Now the jokes are flowing, lets get it up in the cloud. Continue to [Lab 3](./lab-3.md) to see how this is done.
