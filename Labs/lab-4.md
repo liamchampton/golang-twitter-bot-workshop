@@ -156,8 +156,9 @@ Now these have been saved, your application will have access to them. Lets try i
 
 Click on the "Visit App URL" and append `/tweetjoke` to the end of the URL. This will tweet a random joke and you can check this by looking on your twitter feed!
 
-### Finished? Feeling brave and Want some more? Try these next step with no help :wink:
+### Finished? Feeling brave and want some more? Try these next step with less help :wink:
 
 1. Create a route handler that will search for a given key term and display the output.
 
 2. Fancy a different deployment method? Try deploying the application into a Kubernetes cluster on IBM Cloud. (Hint: There is another workshop to assist with this - be careful with environment variables though!)
+
