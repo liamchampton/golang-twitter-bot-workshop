@@ -1,6 +1,6 @@
 # Hosted Golang Twitter Bot
 
-This workshop will show you how to build a simple Golang application and then deploy it to your preferred cloud environment
+This workshop will show you how to build a simple Golang application and then deploy it into a cloud environment.
 
 ## Golang Installation
 
